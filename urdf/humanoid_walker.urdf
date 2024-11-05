@@ -23,7 +23,7 @@
   </joint>
 
   <!-- head -->
-  <link name="head_mass">
+  <!-- <link name="head_mass">
     <inertial>
       <mass value="50"/>
       <inertia ixx="4" ixy="0" ixz="0" iyy="4" iyz="0" izz="4"/>
@@ -52,13 +52,13 @@
     <parent link="head"/>
     <child link="head_mass"/>
     <origin xyz="0 0 1.0"/>
-  </joint>
+  </joint> -->
 
   <!-- head & torso -->
-  <joint name="torso_head_weld" type="fixed">
+  <!-- <joint name="torso_head_weld" type="fixed">
     <parent link="torso"/>
     <child link="head"/>
-  </joint>
+  </joint> -->
 
   <!-- torso -->
   <link name="torso_mass">
@@ -77,9 +77,9 @@
   </link>
   <link name="torso">
     <visual>
-      <origin xyz="0 0 0.4"/>
+      <origin xyz="0 0 0.3"/>
       <geometry>
-        <cylinder length="0.8" radius="0.005"/>
+        <cylinder length="0.6" radius="0.005"/>
       </geometry>
       <material name="green">
         <color rgba="0 1 0 1"/>
@@ -89,14 +89,14 @@
   <joint name="torso_mass_weld" type="fixed">
     <parent link="torso"/>
     <child link="torso_mass"/>
-    <origin xyz="0 0 0.4"/>
+    <origin xyz="0 0 0.3"/>
   </joint>
 
   <!-- head & left uppper arm -->
   <joint name="left_shoulder_pin" type="continuous">
     <parent link="torso"/>
     <child link="left_upper_arm"/>
-    <origin xyz="0 0 0.8" rpy="3.14159 0 0"/>
+    <origin xyz="0 0 0.6" rpy="3.14159 0 0"/>
     <axis xyz="0 1 0"/>
     <limit effort="500"/>
   </joint>
@@ -187,7 +187,7 @@
   <joint name="right_shoulder_pin" type="continuous">
     <parent link="torso"/>
     <child link="right_upper_arm"/>
-    <origin xyz="0 0 0.8" rpy="3.14159 0 0"/>
+    <origin xyz="0 0 0.6" rpy="3.14159 0 0"/>
     <axis xyz="0 1 0"/>
     <limit effort="500"/>
   </joint>
@@ -476,6 +476,27 @@
     <mechanicalReduction>1</mechanicalReduction>
   </transmission>
 
+  <transmission name="left_shoulder_trans" type="SimpleTransmission">
+    <actuator name="left_shoulder_torque"/>
+    <joint name="left_shoulder_pin"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="right_shoulder_trans" type="SimpleTransmission">
+    <actuator name="right_shoulder_torque"/>
+    <joint name="right_shoulder_pin"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="left_elbow_trans" type="SimpleTransmission">
+    <actuator name="left_elbow_torque"/>
+    <joint name="left_elbow_pin"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+  <transmission name="right_elbow_trans" type="SimpleTransmission">
+    <actuator name="right_elbow_torque"/>
+    <joint name="right_elbow_pin"/>
+    <mechanicalReduction>1</mechanicalReduction>
+  </transmission>
+
   <!-- collision -->
   <collision_filter_group name="robot_links">
     <member link="left_lower_leg_mass"/>
@@ -484,6 +505,14 @@
     <member link="right_lower_leg"/>
     <member link="right_upper_leg"/>
     <member link="left_upper_leg"/>
+
+    <member link="left_lower_arm_mass"/>
+    <member link="right_lower_arm_mass"/>
+    <member link="left_lower_arm"/>
+    <member link="right_lower_arm"/>
+    <member link="right_upper_arm"/>
+    <member link="left_upper_arm"/>
+
     <member link="torso"/>
     <member link="torso_mass"/>
     <ignored_collision_filter_group collision_filter_group="robot_links"/>
